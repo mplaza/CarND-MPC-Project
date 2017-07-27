@@ -77,7 +77,7 @@ int main() {
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
     string sdata = string(data).substr(0, length);
-    cout << sdata << endl;
+    // cout << sdata << endl;
     if (sdata.size() > 2 && sdata[0] == '4' && sdata[1] == '2') {
       string s = hasData(sdata);
       if (s != "") {
@@ -94,7 +94,7 @@ int main() {
 
           double Lf = 2.67;
 
-          std::cout << j[1]["steering_angle"] << endl;
+          // std::cout << j[1]["steering_angle"] << endl;
           /*
           * TODO: Calculate steering angle and throttle using MPC.
           *
@@ -187,7 +187,7 @@ int main() {
 
           for( int i = 0; i < num_points; i++){
             next_x_vals.push_back(poly_increment*i);
-            next_y_vals.push_back(polyeval(coefficients, poly_increment*1));
+            next_y_vals.push_back(polyeval(coefficients, poly_increment*i));
           }
 
 
@@ -199,7 +199,7 @@ int main() {
 
 
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
+          // std::cout << msg << std::endl;
           // Latency
           // The purpose is to mimic real driving conditions where
           // the car does actuate the commands instantly.

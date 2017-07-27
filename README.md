@@ -21,7 +21,7 @@ The intended vehicle path is expressed as a polynomial and the kinematic model i
 
 The N needed to not be too large that it would take too long for the solver to compute or try to take into account a path too far into the future and adversely affect the ability of the car to stay on the road in the long term. If it was too small then it didn't calculate far enough ahead to estabilish a good trajectory. If the dt was too small then  it had to run too many steps making it computationally expensive (and potentially if the N was too large and dt was too small the solver might take longer to solve than the car required the input to safely move) but if it was too large than the car might not respond to a change in the road fast enough.
 
-When N was 20 the car turned a lot more erradically and went off the road. When it was 5 it seemed to not be calculating far enough ahead and went off the road. When the dt as .01 the car seemed to be moving before it finished solving. 0.3 for dt worked better but the car had to really slow down at the turns to not go off the road. Using 12 for N and .1 for dt seemed to allow the car to stay on the track pretty well.
+When N was 20 the car turned a lot more erradically and went off the road. When it was 5 it seemed to not be calculating far enough ahead and went off the road. When the dt as .01 the car seemed to be moving before it finished solving. 0.3 for dt worked better but the car had to really slow down at the turns to not go off the road. Using 10 for N and .1 for dt seemed to allow the car to stay on the track pretty well.
 
 **If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.
 
