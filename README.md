@@ -1,6 +1,38 @@
 # CarND-Controls-MPC
 Self-Driving Car Engineer Nanodegree Program
 
+
+#RUBRIC QUESTIONS
+
+**Student describes their model in detail. This includes the state, actuators and update equations.
+
+The vehicle has an x and y position, orientation angle (psi) and velocity which comprise its state. We're also using cross track error (cte) and psi error (epsi) to track the vehicle's offset from intended position. The kinematic model describes how the vehicle's state changes over time and how the actuators change that state. The actuators used here were steering and braking/throttling which affect the psi and velocity of the car and change its state. The state is updated with these equations, which have been adjusted in MPC.cpp lines 113-119:
+
+        x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt
+        y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt
+        psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt 
+        v_[t] = v[t-1] + a[t-1] * dt
+        cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt
+        epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt
+
+The intended vehicle path is expressed as a polynomial and the kinematic model is used to predict the vehicle's path based on the use of different actuators so that the error between the vehicles' actual path and reference trajectory can be minimized (using a cost functino). Given the vehicle and other real world info, the actuators can be constrained based on the ability of the car to safely turn at different angles or acceleration capabilities.
+
+**Student discusses the reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.
+
+The N needed to not be too large that it would take too long for the solver to compute or try to take into account a path too far into the future and adversely affect the ability of the car to stay on the road in the long term. If it was too small then it didn't calculate far enough ahead to estabilish a good trajectory. If the dt was too small then  it had to run too many steps making it computationally expensive (and potentially if the N was too large and dt was too small the solver might take longer to solve than the car required the input to safely move) but if it was too large than the car might not respond to a change in the road fast enough.
+
+When N was 20 the car turned a lot more erradically and went off the road. When it was 5 it seemed to not be calculating far enough ahead and went off the road. When the dt as .01 the car seemed to be moving before it finished solving. 0.3 for dt worked better but the car had to really slow down at the turns to not go off the road. Using 12 for N and .1 for dt seemed to allow the car to stay on the track pretty well.
+
+**If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.
+
+The waypoints were adjusted to make the polyfit easier. The current position was subtracted so that the x and y points are at the origin. The points are rotated about the origin to make psi zero.
+
+**Student provides details on how they deal with latency.
+
+In order to deal with latency the kinematic equations were used to predict where the car would be at a point in time after the latency-- so where the car would be when the commands were actually being executed (lines 134-144). This predicted state was passed to the solver instead of the actual state so that actuators could be found that would be best after the delay.
+
+
+
 ---
 
 ## Dependencies
