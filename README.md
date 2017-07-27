@@ -29,7 +29,7 @@ The waypoints were adjusted to make the polyfit easier. The current position was
 
 **Student provides details on how they deal with latency.
 
-In order to deal with latency the kinematic equations were used to predict where the car would be at a point in time after the latency-- so where the car would be when the commands were actually being executed (lines 134-144). This predicted state was passed to the solver instead of the actual state so that actuators could be found that would be best after the delay.
+In order to deal with latency the kinematic equations were used to predict where the car would be at a point in time after the latency-- so where the car would be when the commands were actually being executed (lines 134-144). This predicted state was passed to the solver instead of the actual state so that actuators could be found that would be best after the delay. Also when the speed was lower the latency was less of a problem.
 
 
 
